@@ -13,7 +13,7 @@ contract PixelPussy is ERC721Enumerable, Ownable {
 
   string public baseURI;
   string public baseExtension = ".json";
-  uint256 public cost = 0.4 ether;
+  uint256 public cost = 100 ether;
   uint256 public maxSupply = 2000;
   uint256 public maxMintAmount = 20;
   bool public paused = false;

@@ -1,1 +1,6 @@
-
+.clock {
+  display: flex;
+  font-family: "poppins";
+  align-items: center;
+  color: #cba561;
+}
