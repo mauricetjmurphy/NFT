@@ -98,9 +98,7 @@ nav,
 section {
   display: block;
 }
-body {
-  line-height: 1;
-}
+
 ol,
 ul {
   list-style: none;
@@ -144,12 +142,6 @@ table {
     url("../assets/fonts/poppins-regular.woff") format("woff");
 }
 
-body {
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -164,10 +156,17 @@ body::-webkit-scrollbar {
 body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100vw;
+  overflow: hidden;
 }
 
 html {
   background-color: "#4C4C4C";
+  width: 100vw;
+  overflow-x: hidden;
 }
 
 div {

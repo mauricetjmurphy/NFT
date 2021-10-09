@@ -1,30 +1,103 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import images from "./data/imageData";
-import character from "../assets/images/Character.png";
-import "./hero.css";
+import "../styles/styles.css";
 
-export const Section = styled.div`
+export const HeroSection = styled.div`
   min-width: 100vw;
-  height: 500px;
+  height: 700px;
   background: #082032;
   display: flex;
+  justify-content: center;
   padding: 0 150px;
+  padding-top: 150px;
+
+  span {
+    padding-bottom: 60px;
+  }
+
+  @media only screen and (max-width: 450px) {
+    padding: 100px 20px 0 20px;
+
+    span {
+      padding-bottom: 30px;
+    }
+  }
 `;
 
-export const Container = styled.div`
-  min-width: 50%;
+export const HeroContentContainer = styled.div`
+  width: 50%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
 
-export const ImageContainer = styled.div`
-  height: 250px;
+  h1 {
+    font-size: 50px;
+    font-family: "Alfa Slab One";
+    color: var(--gold);
+    letter-spacing: 6px;
+    font-weight: 200;
+    padding: 40px 0;
 
-  img {
-    height: 100%;
-    border-radius: 5px;
+    @media only screen and (max-width: 1390px) {
+      font-size: 36px;
+    }
+
+    @media only screen and (max-width: 450px) {
+      font-size: 28px;
+      padding: 25px 0;
+      margin: 0;
+    }
+  }
+
+  h2 {
+    font-size: 22px;
+    font-family: "poppins-reg";
+    color: #fff;
+
+    letter-spacing: 2px;
+
+    @media only screen and (max-width: 1390px) {
+      font-size: 18px;
+    }
+
+    @media only screen and (max-width: 450px) {
+      font-size: 20px;
+      padding: 0 0 10px 0;
+      margin: 0;
+    }
+  }
+
+  p {
+    font-size: 20px;
+    font-family: "poppins-reg";
+    color: #fff;
+    text-align: center;
+    padding-bottom: 20px;
+    letter-spacing: 1.5px;
+    line-height: 26px;
+
+    @media only screen and (max-width: 1390px) {
+      font-size: 18px;
+    }
+
+    @media only screen and (max-width: 450px) {
+      font-size: 12px;
+      line-height: 16px;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  @media only screen and (max-width: 1390px) {
+    width: 80%;
+  }
+
+  @media only screen and (max-width: 450px) {
+    width: 100%;
+    padding: 0;
+    margin: 0;
   }
 `;
 
@@ -35,12 +108,53 @@ export const TimeUnit = styled.section`
   padding: 20px;
   font-size: 3rem;
 
+  p {
+    font-family: "poppins-reg";
+    color: var(--gold);
+    font-size: 42px;
+  }
+
+  small {
+    font-size: 16px;
+  }
+
   p:first-child {
     padding-bottom: 10px;
   }
 
   p:nth-child(2) {
     font-size: 1.4rem;
+  }
+
+  @media only screen and (max-width: 450px) {
+    padding: 10px;
+    margin: 0;
+  }
+`;
+
+export const MintButton = styled.div`
+  min-height: 40px;
+  width: 200px;
+  border: 2px solid #fff;
+  background: var(--gold);
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-family: "poppins-reg";
+  font-weight: 900;
+  color: #082032;
+  margin: 20px 0;
+
+  &:hover {
+    border: 2px solid var(--gold);
+    background: #fff;
+    color: var(--gold);
+  }
+
+  @media only screen and (max-width: 450px) {
+    margin: 35px 0;
   }
 `;
 
@@ -53,7 +167,7 @@ function Hero() {
   let interval;
 
   const startTimer = () => {
-    const countdownDate = new Date("May 30, 2022 00:00:00").getTime();
+    const countdownDate = new Date("November 01, 2021 00:00:00").getTime();
 
     interval = setInterval(() => {
       const now = new Date().getTime();
@@ -86,25 +200,24 @@ function Hero() {
     startTimer();
   });
 
-  const [currentImage, setCurrentImage] = useState(null);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentImage(images[Math.floor(Math.random() * images.length)]);
-    }, 500);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
   return (
-    <Section>
-      <Container>
+    <HeroSection>
+      <HeroContentContainer>
+        <h2>Welcome to</h2>
+        <h1>PIXEL PUSSIES</h1>
+        <p>
+          Pixel pussies Gen-0 are a collection of 2000 unique art pieces which
+          will become the first generation of breedable, tradable, and
+          customizable NFT cats. Join us in making the first 100% community
+          owned NFT gaming platform.
+        </p>
+        <MintButton>Mint a Pussy</MintButton>
+        <p>We will be releasing the pussies into the wild in:</p>
+
         <div>
           <section className="timer-container">
             <section
               style={{
-                border: "3px solid #0e0e0e",
-                padding: "20px",
                 borderRadius: "5px",
               }}
               className="timer"
@@ -141,13 +254,8 @@ function Hero() {
             </section>
           </section>
         </div>
-      </Container>
-      <Container>
-        <ImageContainer>
-          <img src={currentImage} alt="" />
-        </ImageContainer>
-      </Container>
-    </Section>
+      </HeroContentContainer>
+    </HeroSection>
   );
 }
 

@@ -2,68 +2,70 @@ import React from "react";
 import styled from "styled-components";
 
 export const RoadItemContainer = styled.div`
-  width: 60%;
+  width: 50%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+
+  @media only screen and (max-width: 450px) {
+    width: 100%;
+    margin: 0 !important;
+  }
 `;
 
 export const RoadContentContainer = styled.div`
-  padding-left: 50px;
+  font-family: poppins-reg;
+  color: var(--gold);
+  font-size: 16px;
 
-  p {
-    color: #cba561;
-    font-family: "poppins";
-    font-weight: 900;
-    line-height: 22px;
-    letter-spacing: 1px;
+  @media only screen and (max-width: 450px) {
+    font-size: 14px;
+    padding: 0 15px !important;
+    text-align: left !important;
   }
 `;
 
 export const PercentageContainer = styled.div`
-  width: 100px;
   height: 100px;
-  border: 2px solid #cba561;
-  border-radius: 100px;
+  min-width: 100px;
+  border: 2px solid var(--gold);
+  border-radius: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: poppins-reg;
+  color: var(--gold);
+  font-size: 26px;
 
-  h1 {
-    color: #cba561;
+  @media only screen and (max-width: 450px) {
+    height: 50px;
+    min-width: 50px;
+    font-size: 18px;
+    order: 1 !important;
   }
 `;
 
-function RoadMapItem({ percentage, content, last }) {
+function RoadMapItemTemp({ percentage, content, position }) {
   return (
-    <RoadItemContainer>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <div>
-          <PercentageContainer>
-            <h1>{percentage}</h1>
-          </PercentageContainer>
-        </div>
-
-        <RoadContentContainer>
-          <p>{content}</p>
-        </RoadContentContainer>
-      </div>
-
-      <div style={{ height: "30px", display: "flex", width: "100px" }}>
-        <div
-          style={
-            last === "True"
-              ? { borderRight: "none", width: "50%" }
-              : { borderRight: "1px solid #cba561", width: "50%" }
-          }
-        ></div>
-        <div
-          style={
-            last === "True"
-              ? { borderLeft: "none", width: "50%" }
-              : { borderLeft: "1px solid #cba561", width: "50%" }
-          }
-        ></div>
-      </div>
+    <RoadItemContainer
+      style={position == "right" ? { marginLeft: "50%" } : { marginRight: "0" }}
+    >
+      <PercentageContainer
+        style={position == "right" ? { order: "1" } : { order: "2" }}
+      >
+        {percentage}
+      </PercentageContainer>
+      <RoadContentContainer
+        style={
+          position == "right"
+            ? { order: "2", paddingLeft: "30px", textAlign: "left" }
+            : { order: "1", paddingRight: "30px", textAlign: "right" }
+        }
+      >
+        {content}
+      </RoadContentContainer>
     </RoadItemContainer>
   );
 }
 
-export default RoadMapItem;
+export default RoadMapItemTemp;

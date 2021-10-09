@@ -13,7 +13,53 @@ import l from "../../assets/images/12.png";
 import m from "../../assets/images/13.png";
 import n from "../../assets/images/14.png";
 import o from "../../assets/images/15.png";
+import p from "../../assets/images/16.png";
+import q from "../../assets/images/17.png";
+import r from "../../assets/images/18.png";
+import s from "../../assets/images/19.png";
+import t from "../../assets/images/20.png";
+import u from "../../assets/images/21.png";
+import v from "../../assets/images/22.png";
+import w from "../../assets/images/23.png";
+import x from "../../assets/images/24.png";
+import y from "../../assets/images/25.png";
+import z from "../../assets/images/26.png";
+import aa from "../../assets/images/27.png";
+import bb from "../../assets/images/28.png";
+import cc from "../../assets/images/29.png";
+import dd from "../../assets/images/30.png";
 
-const images = [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o];
+const images = [
+  a,
+  b,
+  c,
+  d,
+  e,
+  f,
+  g,
+  h,
+  i,
+  j,
+  k,
+  l,
+  m,
+  n,
+  o,
+  p,
+  q,
+  r,
+  s,
+  t,
+  u,
+  v,
+  w,
+  x,
+  y,
+  z,
+  aa,
+  bb,
+  cc,
+  dd,
+];
 
 export default images;

@@ -10,8 +10,9 @@ import Hero from "./components/Hero";
 import Intro from "./components/Intro";
 import RoadMap from "./components/RoadMap";
 import Rarity from "./components/Rarity";
-import { DreamSection } from "./components/PussyDream";
+import PussyDream, { DreamSection } from "./components/PussyDream";
 import Footer from "./components/Footer";
+import PussyWall from "./components/PussyWall";
 
 export const StyledButton = styled.button`
   padding: 10px;
@@ -73,9 +74,9 @@ function App() {
       .mint(blockchain.account, _amount)
       .send({
         gasLimit: "285000",
-        to: "0x827acb09a2dc20e39c9aad7f7190d9bc53534192",
+        to: "0x0f65a53f5fb9edfc04056ee1740f51c87c8c89bb",
         from: blockchain.account,
-        value: blockchain.web3.utils.toWei((100 * _amount).toString(), "ether"),
+        value: blockchain.web3.utils.toWei((0.4 * _amount).toString(), "ether"),
       })
       .once("error", (err) => {
         console.log(err);
@@ -107,138 +108,10 @@ function App() {
       <Hero />
       <Intro />
       <RoadMap />
+      <PussyWall />
       <Rarity />
-      <DreamSection />
+      <PussyDream />
       <Footer />
-      <s.Screen style={{ backgroundColor: "var(--yellow)" }}>
-        <s.Container flex={1} ai={"center"} style={{ padding: 24 }}>
-          <s.TextTitle
-            style={{
-              textAlign: "center",
-              fontSize: 28,
-              fontWeight: "bold",
-            }}
-          >
-            Mint a Pixel Pussy
-          </s.TextTitle>
-          <s.SpacerMedium />
-          <ResponsiveWrapper flex={1} style={{ padding: 24 }}>
-            <s.Container flex={1} jc={"center"} ai={"center"}>
-              <StyledImg alt={"example"} src={i1} />
-              <s.SpacerMedium />
-              <s.TextTitle
-                style={{
-                  textAlign: "center",
-                  fontSize: 35,
-                  fontWeight: "bold",
-                }}
-              >
-                {data.totalSupply}/2000
-              </s.TextTitle>
-            </s.Container>
-            <s.SpacerMedium />
-            <s.Container
-              flex={1}
-              jc={"center"}
-              ai={"center"}
-              style={{
-                backgroundColor: "var(--green)",
-                padding: 24,
-              }}
-            >
-              {Number(data.totalSupply) == 1000 ? (
-                <>
-                  <s.TextTitle style={{ textAlign: "center" }}>
-                    The sale has ended.
-                  </s.TextTitle>
-                  <s.SpacerSmall />
-                  <s.TextDescription style={{ textAlign: "center" }}>
-                    You can still find Pussy on{" "}
-                    <a
-                      target={"_blank"}
-                      href={"https://opensea.io/collection/nerdy-coder-clones"}
-                    >
-                      Opensea.io
-                    </a>
-                  </s.TextDescription>
-                </>
-              ) : (
-                <>
-                  <s.TextTitle style={{ textAlign: "center" }}>
-                    1 PP costs 100 MATIC.
-                  </s.TextTitle>
-                  <s.SpacerXSmall />
-                  <s.TextDescription style={{ textAlign: "center" }}>
-                    Excluding gas fee.
-                  </s.TextDescription>
-                  <s.SpacerSmall />
-                  <s.TextDescription style={{ textAlign: "center" }}>
-                    {feedback}
-                  </s.TextDescription>
-                  <s.SpacerMedium />
-                  {blockchain.account === "" ||
-                  blockchain.smartContract === null ? (
-                    <s.Container ai={"center"} jc={"center"}>
-                      <s.TextDescription style={{ textAlign: "center" }}>
-                        Connect to the Polygon network
-                      </s.TextDescription>
-                      <s.SpacerSmall />
-                      <StyledButton
-                        onClick={(e) => {
-                          e.preventDefault();
-                          dispatch(connect());
-                          getData();
-                        }}
-                      >
-                        CONNECT
-                      </StyledButton>
-                      {blockchain.errorMsg !== "" ? (
-                        <>
-                          <s.SpacerSmall />
-                          <s.TextDescription
-                            style={{
-                              textAlign: "center",
-                            }}
-                          >
-                            {blockchain.errorMsg}
-                          </s.TextDescription>
-                        </>
-                      ) : null}
-                    </s.Container>
-                  ) : (
-                    <s.Container ai={"center"} jc={"center"} fd={"row"}>
-                      <StyledButton
-                        disabled={claimingNft ? 1 : 0}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          claimNFTs(1);
-                          getData();
-                        }}
-                      >
-                        {claimingNft ? "BUSY" : "BUY 1"}
-                      </StyledButton>
-                    </s.Container>
-                  )}
-                </>
-              )}
-            </s.Container>
-          </ResponsiveWrapper>
-          <s.SpacerSmall />
-          <s.Container jc={"center"} ai={"center"} style={{ width: "70%" }}>
-            <s.TextDescription style={{ textAlign: "center", fontSize: 9 }}>
-              Please make sure you are connected to the right network (Polygon
-              Mainnet) and the correct address. Please note: Once you make the
-              purchase, you cannot undo this action.
-            </s.TextDescription>
-            <s.SpacerSmall />
-            <s.TextDescription style={{ textAlign: "center", fontSize: 9 }}>
-              We have set the gas limit to 285000 for the contract to
-              successfully mint your NFT. We recommend that you don't change the
-              gas limit.
-            </s.TextDescription>
-          </s.Container>
-        </s.Container>
-      </s.Screen>
     </>
   );
 }
