@@ -6,7 +6,7 @@ import "../styles/styles.css";
 
 export const FooterSection = styled.div`
   width: 100vw;
-  height: 250px;
+  height: 200px;
   background: #141414;
   padding: 0 150px;
   display: flex;
@@ -31,7 +31,7 @@ export const FooterSection = styled.div`
   }
 
   @media only screen and (max-width: 450px) {
-    height: 180px;
+    height: 120px;
     padding: 0 20px;
   }
 `;
@@ -40,7 +40,7 @@ const style = {
   width: "20px",
   height: "20px",
   color: "#fff",
-  marginTop: "5px",
+  marginTop: "10px",
 };
 
 function Footer() {
@@ -53,9 +53,7 @@ function Footer() {
           justifyContent: "center",
           width: "350px",
         }}
-      >
-        <h1 style={{}}>Pixel Pussy</h1>
-      </div>
+      ></div>
 
       <div style={{ padding: "20px 0 15px 0", display: "flex" }}>
         <div

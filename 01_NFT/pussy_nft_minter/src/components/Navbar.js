@@ -1,22 +1,18 @@
-import React, { useState } from "react";
-import { FiTwitter, FiInstagram } from "react-icons/fi";
+import React, { useState, useEffect } from "react";
+import { FiTwitter } from "react-icons/fi";
 import { FaDiscord } from "react-icons/fa";
 import Menu from "../assets/images/hamburger_icon.svg";
 import styled from "styled-components";
-
 import "../styles/styles.css";
-
-import * as Scroll from "react-scroll";
-import {
-  Link,
-  Button,
-  Element,
-  Events,
-  animateScroll as scroll,
-  scrollSpy,
-  scroller,
-} from "react-scroll";
+import BrandIcon from "./BrandIcon";
+import * as s from "react-scroll";
+import { Link } from "react-scroll";
 import DropdownNav from "./DropdownNav";
+import openseaIcon from "../assets/images/opensea.png";
+
+import { connect } from "../redux/blockchain/blockchainActions";
+import { fetchData } from "../redux/data/dataActions";
+import { useSelector, useDispatch } from "react-redux";
 
 export const Nav = styled.div`
   width: 100vw;
@@ -28,11 +24,12 @@ export const Nav = styled.div`
   font-family: montserrat;
   background: #082032;
   position: fixed;
+  z-index: 10;
 
   @media only screen and (max-width: 450px) {
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 30px;
   }
 `;
 
@@ -104,20 +101,34 @@ const style = {
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState();
+  const dispatch = useDispatch();
+  const blockchain = useSelector((state) => state.blockchain);
 
   const toggleHome = () => {
-    scroll.scrollToTop();
+    s.scrollToTop();
   };
 
   const toggleNav = () => {
     setIsOpen(!isOpen);
   };
+
+  const getData = () => {
+    if (blockchain.account !== "" && blockchain.smartContract !== null) {
+      dispatch(fetchData(blockchain.account));
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, [blockchain.account]);
+
   return (
     <Nav>
       <BrandContainer>
-        <p onClick={() => toggleHome} style={{}}>
+        <BrandIcon onClick={() => toggleHome} />
+        {/* <p onClick={() => toggleHome} style={{}}>
           Pixel Pussies
-        </p>
+        </p> */}
       </BrandContainer>
 
       <LinkContainer>
@@ -167,15 +178,42 @@ function Navbar() {
         </div>
       </LinkContainer>
       <SocialContainer>
-        <WalletConnect>Connect</WalletConnect>
-        <a href="/" style={{ color: "#fff" }}>
+        <WalletConnect
+          onClick={(e) => {
+            console.log("clicked");
+            e.preventDefault();
+            dispatch(connect());
+            getData();
+          }}
+        >
+          Connect
+        </WalletConnect>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://twitter.com/PixelPussNFT"
+          style={{ color: "#fff" }}
+        >
           <FiTwitter style={style} />
         </a>
-        <a href="/" style={{ color: "#fff" }}>
-          <FiInstagram style={style} />
-        </a>
-        <a href="/" style={{ color: "#fff" }}>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://discord.com/channels/895133506211029042/895141616879276142"
+          style={{ color: "#fff" }}
+        >
           <FaDiscord style={style} />
+        </a>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://opensea.io/collection/the-pixel-pussy"
+        >
+          <img
+            style={{ width: "30px", margin: "0 10px" }}
+            src={openseaIcon}
+            alt="opensea icon"
+          />
         </a>
       </SocialContainer>
       <div className="menu-icon">

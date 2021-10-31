@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import images from "./data/imageData";
 
@@ -19,7 +19,7 @@ function ImageFlicker() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentImage(images[Math.floor(Math.random() * images.length)]);
-    }, 300);
+    }, 200);
 
     return () => clearInterval(intervalId);
   }, []);

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import "../styles/styles.css";
 
 export const IntroSection = styled.div`
-  height: 400px;
+  height: 500px;
   background: #334756;
   display: flex;
   justify-content: center;
@@ -53,7 +53,7 @@ export const IntroSection = styled.div`
 
   @media only screen and (max-width: 450px) {
     flex-direction: column;
-    height: 1000px;
+    height: 900px;
     padding: 0 20px;
     margin: 0;
   }

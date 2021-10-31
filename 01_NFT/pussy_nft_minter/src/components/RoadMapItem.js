@@ -48,16 +48,16 @@ export const PercentageContainer = styled.div`
 function RoadMapItemTemp({ percentage, content, position }) {
   return (
     <RoadItemContainer
-      style={position == "right" ? { marginLeft: "50%" } : { marginRight: "0" }}
+      style={position === "right" ? { marginLeft: "50%" } : { marginRight: "0" }}
     >
       <PercentageContainer
-        style={position == "right" ? { order: "1" } : { order: "2" }}
+        style={position === "right" ? { order: "1" } : { order: "2" }}
       >
         {percentage}
       </PercentageContainer>
       <RoadContentContainer
         style={
-          position == "right"
+          position === "right"
             ? { order: "2", paddingLeft: "30px", textAlign: "left" }
             : { order: "1", paddingRight: "30px", textAlign: "right" }
         }

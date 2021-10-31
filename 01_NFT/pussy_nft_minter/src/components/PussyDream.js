@@ -49,7 +49,7 @@ export const DreamSection = styled.div`
   }
 
   @media only screen and (max-width: 450px) {
-    height: 800px;
+    height: 710px;
     padding: 0;
     margin: 0;
 

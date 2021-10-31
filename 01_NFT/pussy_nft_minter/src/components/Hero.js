@@ -1,11 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { connect } from "../redux/blockchain/blockchainActions";
+import { fetchData } from "../redux/data/dataActions";
 import styled from "styled-components";
-import images from "./data/imageData";
 import "../styles/styles.css";
+import CountdownTimer from "./CountdownTimer";
+
+// const truncate = (input, len) =>
+//   input.length > len ? `${input.substring(0, len)}...` : input;
 
 export const HeroSection = styled.div`
   min-width: 100vw;
-  height: 700px;
+  height: 900px;
   background: #082032;
   display: flex;
   justify-content: center;
@@ -18,6 +24,7 @@ export const HeroSection = styled.div`
 
   @media only screen and (max-width: 450px) {
     padding: 100px 20px 0 20px;
+    height: 750px;
 
     span {
       padding-bottom: 30px;
@@ -45,9 +52,11 @@ export const HeroContentContainer = styled.div`
     }
 
     @media only screen and (max-width: 450px) {
-      font-size: 28px;
+      font-size: 46px;
       padding: 25px 0;
       margin: 0;
+      letter-spacing: 4px;
+      text-align: center;
     }
   }
 
@@ -64,7 +73,7 @@ export const HeroContentContainer = styled.div`
 
     @media only screen and (max-width: 450px) {
       font-size: 20px;
-      padding: 0 0 10px 0;
+      padding: 0;
       margin: 0;
     }
   }
@@ -101,38 +110,7 @@ export const HeroContentContainer = styled.div`
   }
 `;
 
-export const TimeUnit = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  font-size: 3rem;
-
-  p {
-    font-family: "poppins-reg";
-    color: var(--gold);
-    font-size: 42px;
-  }
-
-  small {
-    font-size: 16px;
-  }
-
-  p:first-child {
-    padding-bottom: 10px;
-  }
-
-  p:nth-child(2) {
-    font-size: 1.4rem;
-  }
-
-  @media only screen and (max-width: 450px) {
-    padding: 10px;
-    margin: 0;
-  }
-`;
-
-export const MintButton = styled.div`
+export const MintButton = styled.button`
   min-height: 40px;
   width: 200px;
   border: 2px solid #fff;
@@ -158,47 +136,69 @@ export const MintButton = styled.div`
   }
 `;
 
+export const TextDescription = styled.p`
+  color: var(--white);
+  font-size: 12px;
+  line-height: 1.6;
+
+  @media only screen and (max-width: 450px) {
+    font-size: 10px !important;
+`;
+
+export const SpacerSmall = styled.div`
+  height: 16px;
+  width: 16px;
+`;
+
 function Hero() {
-  const [timerDays, setTimerDays] = useState("00");
-  const [timerHours, setTimerHours] = useState();
-  const [timerMinutes, setTimerMinutes] = useState();
-  const [timerSeconds, setTimerSeconds] = useState();
+  const dispatch = useDispatch();
+  const blockchain = useSelector((state) => state.blockchain);
+  // const data = useSelector((state) => state.data);
+  const [feedback, setFeedback] = useState("");
+  const [claimingNft, setClaimingNft] = useState(false);
+  // const [blockchainAccount, setBlockchainAccount] = "";
 
-  let interval;
+  console.log(blockchain);
 
-  const startTimer = () => {
-    const countdownDate = new Date("November 01, 2021 00:00:00").getTime();
+  const claimNFTs = (_amount) => {
+    if (_amount <= 0) {
+      return;
+    }
+    setFeedback("Minting your Pixel Pussy...");
+    setClaimingNft(true);
+    blockchain.smartContract.methods
+      .mint(blockchain.account, _amount)
+      .send({
+        gasLimit: "285000",
+        to: "0x0f65a53f5Fb9EDFc04056Ee1740F51C87c8C89Bb",
+        from: blockchain.account,
+        value: blockchain.web3.utils.toWei((150 * _amount).toString(), "ether"),
+      })
+      .once("error", (err) => {
+        console.log(err);
+        setFeedback("Sorry, something went wrong please try again later.");
+        setClaimingNft(false);
+      })
+      .then((receipt) => {
+        setFeedback(
+          "You now own a Pixel Pussy NFT. You can go visit Opensea.io to view it."
+        );
+        setClaimingNft(false);
+        dispatch(fetchData(blockchain.account));
+        // setBlockchainAccount(blockchain.account);
+      });
+  };
 
-    interval = setInterval(() => {
-      const now = new Date().getTime();
-
-      const distance = countdownDate - now;
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      if (distance < 0) {
-        //Stop the timer
-        clearInterval(interval.current);
-      } else {
-        // Update timer
-        setTimerDays(days);
-        setTimerHours(hours);
-        setTimerMinutes(minutes);
-        setTimerSeconds(seconds);
-      }
-    }, 1000);
+  const getData = () => {
+    if (blockchain.account !== "" && blockchain.smartContract !== null) {
+      dispatch(fetchData(blockchain.account));
+      // setBlockchainAccount(blockchain.account);
+    }
   };
 
   useEffect(() => {
-    startTimer();
-  });
+    getData();
+  }, [blockchain.account]);
 
   return (
     <HeroSection>
@@ -211,49 +211,48 @@ function Hero() {
           customizable NFT cats. Join us in making the first 100% community
           owned NFT gaming platform.
         </p>
-        <MintButton>Mint a Pussy</MintButton>
+        <p>1 Pixel Pussy = 150 Matic</p>
+        {blockchain.account !== null ? (
+          <MintButton
+            disabled={1}
+            onClick={(e) => {
+              e.preventDefault();
+              claimNFTs(1);
+              getData();
+            }}
+          >
+            {claimingNft ? "BUSY" : "Mint a Pussy"}
+          </MintButton>
+        ) : (
+          <MintButton
+            disabled={true}
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(connect());
+              getData();
+            }}
+          >
+            Connect
+          </MintButton>
+        )}
+
+        <TextDescription style={{ textAlign: "center" }}>
+          {feedback}
+        </TextDescription>
+
         <p>We will be releasing the pussies into the wild in:</p>
 
         <div>
-          <section className="timer-container">
-            <section
-              style={{
-                borderRadius: "5px",
-              }}
-              className="timer"
-            >
-              <div className="clock">
-                <TimeUnit>
-                  <p>{timerDays}</p>
-                  <p>
-                    <small>Days</small>
-                  </p>
-                </TimeUnit>
-                <span>:</span>
-                <TimeUnit>
-                  <p>{timerHours}</p>
-                  <p>
-                    <small>Hours</small>
-                  </p>
-                </TimeUnit>
-                <span>:</span>
-                <TimeUnit>
-                  <p>{timerMinutes}</p>
-                  <p>
-                    <small>Minutes</small>
-                  </p>
-                </TimeUnit>
-                <span>:</span>
-                <TimeUnit>
-                  <p>{timerSeconds}</p>
-                  <p>
-                    <small>Seconds</small>
-                  </p>
-                </TimeUnit>
-              </div>
-            </section>
-          </section>
+          <CountdownTimer />
         </div>
+
+        <SpacerSmall />
+        <TextDescription style={{ textAlign: "center", fontSize: "12px" }}>
+          Please make sure you are connected to the right network (Polygon
+          Mainnet) and the correct address. Please note: Once you make the
+          purchase, you cannot undo this action.
+        </TextDescription>
+        <SpacerSmall />
       </HeroContentContainer>
     </HeroSection>
   );

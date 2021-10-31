@@ -1,23 +1,7 @@
 import React from "react";
 import "../styles/styles.css";
 import SocialMedia from "./SocialMedia";
-
-import * as Scroll from "react-scroll";
-import {
-  Link,
-  Button,
-  Element,
-  Events,
-  animateScroll as scroll,
-  scrollSpy,
-  scroller,
-} from "react-scroll";
-
-const style = {
-  width: "20px",
-  height: "20px",
-  color: "#fff",
-};
+import { Link } from "react-scroll";
 
 function DropdownNav({ isOpen, toggleNav }) {
   return (

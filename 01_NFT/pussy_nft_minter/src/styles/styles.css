@@ -140,29 +140,10 @@ li:first-child {
   }
 }
 /*-------------Pussy Wall-----------*/
-.banner-container {
-  border-top: 4px solid #141414;
-  border-bottom: 4px solid #141414;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  max-width: 100vw;
-  overflow: hidden;
-}
 
 .grid-item {
-  width: 213px;
-  height: 213px;
-}
-
-.grid-container {
-  position: relative;
-  width: 100vw;
-  display: grid;
-  grid-template-columns: repeat(20, 1fr);
-  grid-template-rows: repeat(3, 213px);
-  animation: scrolling 60s linear infinite;
+  width: calc(100vw / 10);
+  height: 100%;
 }
 
 @keyframes scrolling {
@@ -170,7 +151,7 @@ li:first-child {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-2130px);
+    transform: translateX(-100vw);
   }
 }
 

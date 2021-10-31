@@ -44,7 +44,7 @@ export const RaritySection = styled.div`
   }
 
   @media only screen and (max-width: 450px) {
-    height: 900px;
+    height: 800px;
     padding: 0 20px;
     margin: 0;
   }

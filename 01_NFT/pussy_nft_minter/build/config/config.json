@@ -1,0 +1,18 @@
+{
+  "CONTRACT_ADDRESS": "0xa23a4a1Fa3c1c5fE8b4fDe78208A27EB68b8B663",
+  "SCAN_LINK": "https://polygonscan.com/token/0xa23a4a1fa3c1c5fe8b4fde78208a27eb68b8b663",
+  "NETWORK": {
+    "NAME": "Polygon",
+    "SYMBOL": "Matic",
+    "ID": 137
+  },
+  "NFT_NAME": "The Pixel Pussy",
+  "SYMBOL": "TPP",
+  "MAX_SUPPLY": 2000,
+  "WEI_COST": 100000000000000000000,
+  "DISPLAY_COST": 100,
+  "GAS_LIMIT": 285000,
+  "MARKETPLACE": "Opeansea",
+  "MARKETPLACE_LINK": "https://opensea.io/collection/the-pixel-pussy",
+  "SHOW_BACKGROUND": true
+}
